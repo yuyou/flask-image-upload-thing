@@ -1,0 +1,11 @@
+Undocumented Python objects
+===========================
+flask_uploads
+-------------
+Functions:
+ * save_file
+ * save_images
+
+Classes:
+ * Proxy
+
