@@ -120,7 +120,6 @@ def save(data, name=None):
             return save_file(name, data)
         save_images(name, data, images)
     else:
-        print 'save %s' % name
         return save_file(name, data)
 
 
