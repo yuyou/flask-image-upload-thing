@@ -14,6 +14,7 @@ def save_file(name, data):
 
     :param name:
         The name to use when saving the upload.
+    :type name: unicode
     :param data:
         The original upload data.
     """
@@ -29,6 +30,7 @@ def save_images(name, data, images):
 
     :param name:
         The name to use when saving the upload.
+    :type name: unicode
     :param data:
         The original upload data.
     :param images:
@@ -68,6 +70,7 @@ def save(data, name=None):
         was not provided, a :attr:`filename` attribute.
     :param name:
         The name to use when saving the data. Defaults to ``data.filename``.
+    :type name: unicode
     """
     if name is None:
         name = data.filename
@@ -81,7 +84,6 @@ def save(data, name=None):
             return save_file(name, data)
         save_images(name, data, images)
     else:
-        print 'save %s' % name
         return save_file(name, data)
 
 
@@ -106,17 +108,11 @@ def init(db, Storage, resizer=None):
 
     :param db:
         The Flask-SQLAlchemy object to use.
-    :type db:
-        a Flask-SQLAlchemy object
     :param Storage:
         The Flask-Storage class to use.
-    :type Storage:
-        a Flask-Storage storage class
     :param resizer:
         The Resizer object to use for resizing images. If not present, images
         will not be resized.
-    :type resizer:
-        a Resizer object
     """
     global _db, _resizer, _Storage
     _db = db
