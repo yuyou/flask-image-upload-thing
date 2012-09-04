@@ -64,7 +64,7 @@ Installation
 API Reference
 -------------
 
-.. automodule:: flask_uploads
+.. module:: flask.ext.uploads
 .. class:: Upload
 
     The database model class generated based on some preset fields and the
@@ -94,8 +94,63 @@ API Reference
         Unicode string field of length 255. Absolute URL to the image resized
         to {size}. None if the upload was not an image file.
 
-.. autofunction:: init
-.. autofunction:: save
-.. autofunction:: delete
-.. autofunction:: save_images
-.. autofunction:: save_file
+.. function:: init(db, Storage, resizer=None)
+
+    Initializes the extension.
+
+    :param db:
+        Used for saving the file data.
+    :type db: Flask-SQLAlchemy object
+    :param Storage:
+        The class whose object's are used for saving the files.
+    :type Storage: Flask-Storage storage class
+    :param resizer:
+        Used for image resizing. If not present, images are not resized.
+    :type resizer: Resizer
+
+.. function:: save(data, name=None)
+
+    Saves data to a new file. If data is an image and resizer was provided
+    for :func:`init`, the image will be resized to all of the resizer's sizes.
+
+    :param data:
+        The data to save. Must have a :meth:`read` method and, if ``name``
+        was not provided, a :attr:`filename` attribute.
+    :type data: file-like object
+    :param name:
+        The name to use when saving the data. Defaults to ``data.filename``.
+    :type name: unicode
+
+.. function:: delete(upload)
+
+    Deletes the uploaded file.
+
+    :param upload:
+        The upload to remove.
+    :type upload: :class:`Upload`
+
+.. function:: save_file(name, data)
+
+    Saves data as a new upload with name ``name``. Used by :func:`save`.
+
+    :param name:
+        The name to use when saving the upload.
+    :type name: unicode
+    :param data:
+        The original upload data.
+    :type data: file-like object
+
+.. function:: save_images(name, data, images)
+
+    Saves data as a new upload with the given images. Used by :func:`save`.
+
+    :param name:
+        The name to use when saving the upload.
+    :type name: unicode
+    :param data:
+        The original upload data.
+    :type data: file-like object
+    :param images:
+        A dictionary containing the names and datas of the images, as returned
+        by ``Resizer.resize_image``.
+    :type images: dict

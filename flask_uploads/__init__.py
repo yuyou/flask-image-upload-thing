@@ -10,14 +10,6 @@ _Storage = None
 
 
 def save_file(name, data):
-    """Saves data as a new upload with name ``name``. Used by :func:`save`.
-
-    :param name:
-        The name to use when saving the upload.
-    :type name: unicode
-    :param data:
-        The original upload data.
-    """
     storage = _Storage()
     name = storage.save(name, data)
     url = storage.url(name)
@@ -26,17 +18,6 @@ def save_file(name, data):
 
 
 def save_images(name, data, images):
-    """Saves data as a new upload with the given images. Used by :func:`save`.
-
-    :param name:
-        The name to use when saving the upload.
-    :type name: unicode
-    :param data:
-        The original upload data.
-    :param images:
-        A dictionary containing the names and datas of the images, as returned
-        by ``Resizer.resize_image``.
-    """
     storage = _Storage()
     name = storage.save(name, data).decode('utf-8')
     url = storage.url(name).decode('utf-8')
@@ -62,16 +43,6 @@ def save_images(name, data, images):
 
 
 def save(data, name=None):
-    """Saves data to a new file. If data is an image and resizer was provided
-    for :func:`init`, the image will be resized to all of the resizer's sizes.
-
-    :param data:
-        The data to save. Should have a :meth:`read` method and, if ``name``
-        was not provided, a :attr:`filename` attribute.
-    :param name:
-        The name to use when saving the data. Defaults to ``data.filename``.
-    :type name: unicode
-    """
     if name is None:
         name = data.filename
     data = data.read()
@@ -88,11 +59,6 @@ def save(data, name=None):
 
 
 def delete(upload):
-    """Deletes the uploaded file.
-
-    :param upload:
-        An instance of :class:`Upload`.
-    """
     storage = _Storage()
     storage.delete(upload.name)
     if _resizer:
@@ -104,16 +70,6 @@ def delete(upload):
 
 
 def init(db, Storage, resizer=None):
-    """Initializes the extension.
-
-    :param db:
-        The Flask-SQLAlchemy object to use.
-    :param Storage:
-        The Flask-Storage class to use.
-    :param resizer:
-        The Resizer object to use for resizing images. If not present, images
-        will not be resized.
-    """
     global _db, _resizer, _Storage
     _db = db
     _resizer = resizer
