@@ -1,51 +1,12 @@
 import os
 from StringIO import StringIO
-import sqlalchemy
-import flask.ext.sqlalchemy
+from .helpers import Proxy
 
+
+Upload = Proxy(None)
 _db = None
 _resizer = None
 _Storage = None
-
-
-class Upload(flask.ext.sqlalchemy.Model):
-    """
-    The database model class based on some preset fields and the
-    ``resizer`` argument passed to :func:`init`. Each of the resizer's sizes
-    add a :attr:`{size}_name` and a :attr:`{size}_url` field to the model.
-
-    .. attribute:: id
-
-        Auto-incrementing integer field. Primary key.
-
-    .. attribute:: name
-
-        Unicode string field of length 255. The name of the original upload.
-
-    .. attribute:: url
-
-        Unicode string field of length 255. Absolute URL to the original
-        upload.
-
-    .. attribute:: {size}_name
-
-        Unicode string field of length 255. The name of the image resized to
-        {size}. None if the upload was not an image file.
-
-    .. attribute:: {size}_url
-
-        Unicode string field of length 255. Absolute URL to the image resized
-        to {size}. None if the upload was not an image file.
-    """
-    __tablename__ = 'upload'
-
-    id = sqlalchemy.Column(
-        sqlalchemy.Integer,
-        autoincrement=True,
-        primary_key=True
-    )
-    name = sqlalchemy.Column(sqlalchemy.Unicode(255), nullable=False)
-    url = sqlalchemy.Column(sqlalchemy.Unicode(255), nullable=False)
 
 
 def save_file(name, data):
@@ -120,6 +81,7 @@ def save(data, name=None):
             return save_file(name, data)
         save_images(name, data, images)
     else:
+        print 'save %s' % name
         return save_file(name, data)
 
 
@@ -160,6 +122,15 @@ def init(db, Storage, resizer=None):
     _db = db
     _resizer = resizer
     _Storage = Storage
+
+    class _Upload(db.Model):
+        __tablename__ = 'upload'
+
+        id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+        name = db.Column(db.Unicode(255), nullable=False)
+        url = db.Column(db.Unicode(255), nullable=False)
+
+    Upload.set_obj(_Upload)
 
     if resizer:
         for size in resizer.sizes.iterkeys():
