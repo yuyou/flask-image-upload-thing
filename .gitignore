@@ -1,4 +1,4 @@
 *.pyc
 .env
 *.swp
-docs/_build
+docs/_build/
