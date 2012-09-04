@@ -105,7 +105,7 @@ to your site. Here&#8217;s a small example on utilizing Flask-Upload:</p>
 <dl class="class">
 <dt id="flask_uploads.Upload">
 <em class="property">class </em><tt class="descclassname">flask_uploads.</tt><tt class="descname">Upload</tt><a class="headerlink" href="#flask_uploads.Upload" title="Permalink to this definition">¶</a></dt>
-<dd><p>The database model class based on some preset fields and the
+<dd><p>The database model class generated based on some preset fields and the
 <tt class="docutils literal"><span class="pre">resizer</span></tt> argument passed to <a class="reference internal" href="#flask_uploads.init" title="flask_uploads.init"><tt class="xref py py-func docutils literal"><span class="pre">init()</span></tt></a>. Each of the resizer&#8217;s sizes
 add a <tt class="xref py py-attr docutils literal"><span class="pre">{size}_name</span></tt> and a <tt class="xref py py-attr docutils literal"><span class="pre">{size}_url</span></tt> field to the model.</p>
 <dl class="attribute">
@@ -152,9 +152,9 @@ to {size}. None if the upload was not an image file.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>db</strong> (<em>a Flask-SQLAlchemy object</em>) &#8211; The Flask-SQLAlchemy object to use.</li>
-<li><strong>Storage</strong> (<em>a Flask-Storage storage class</em>) &#8211; The Flask-Storage class to use.</li>
-<li><strong>resizer</strong> (<em>a Resizer object</em>) &#8211; The Resizer object to use for resizing images. If not present, images
+<li><strong>db</strong> &#8211; The Flask-SQLAlchemy object to use.</li>
+<li><strong>Storage</strong> &#8211; The Flask-Storage class to use.</li>
+<li><strong>resizer</strong> &#8211; The Resizer object to use for resizing images. If not present, images
 will not be resized.</li>
 </ul>
 </td>
@@ -175,7 +175,7 @@ for <a class="reference internal" href="#flask_uploads.init" title="flask_upload
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>data</strong> &#8211; The data to save. Should have a <tt class="xref py py-meth docutils literal"><span class="pre">read()</span></tt> method and, if <tt class="docutils literal"><span class="pre">name</span></tt>
 was not provided, a <tt class="xref py py-attr docutils literal"><span class="pre">filename</span></tt> attribute.</li>
-<li><strong>name</strong> &#8211; The name to use when saving the data. Defaults to <tt class="docutils literal"><span class="pre">data.filename</span></tt>.</li>
+<li><strong>name</strong> (<em>unicode</em>) &#8211; The name to use when saving the data. Defaults to <tt class="docutils literal"><span class="pre">data.filename</span></tt>.</li>
 </ul>
 </td>
 </tr>
@@ -206,7 +206,7 @@ was not provided, a <tt class="xref py py-attr docutils literal"><span class="pr
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> &#8211; The name to use when saving the upload.</li>
+<li><strong>name</strong> (<em>unicode</em>) &#8211; The name to use when saving the upload.</li>
 <li><strong>data</strong> &#8211; The original upload data.</li>
 <li><strong>images</strong> &#8211; A dictionary containing the names and datas of the images, as returned
 by <tt class="docutils literal"><span class="pre">Resizer.resize_image</span></tt>.</li>
@@ -226,7 +226,7 @@ by <tt class="docutils literal"><span class="pre">Resizer.resize_image</span></t
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> &#8211; The name to use when saving the upload.</li>
+<li><strong>name</strong> (<em>unicode</em>) &#8211; The name to use when saving the upload.</li>
 <li><strong>data</strong> &#8211; The original upload data.</li>
 </ul>
 </td>

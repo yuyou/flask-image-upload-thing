@@ -65,7 +65,35 @@ API Reference
 -------------
 
 .. automodule:: flask_uploads
-.. autoclass:: Upload
+.. class:: Upload
+
+    The database model class generated based on some preset fields and the
+    ``resizer`` argument passed to :func:`init`. Each of the resizer's sizes
+    add a :attr:`{size}_name` and a :attr:`{size}_url` field to the model.
+
+    .. attribute:: id
+
+        Auto-incrementing integer field. Primary key.
+
+    .. attribute:: name
+
+        Unicode string field of length 255. The name of the original upload.
+
+    .. attribute:: url
+
+        Unicode string field of length 255. Absolute URL to the original
+        upload.
+
+    .. attribute:: {size}_name
+
+        Unicode string field of length 255. The name of the image resized to
+        {size}. None if the upload was not an image file.
+
+    .. attribute:: {size}_url
+
+        Unicode string field of length 255. Absolute URL to the image resized
+        to {size}. None if the upload was not an image file.
+
 .. autofunction:: init
 .. autofunction:: save
 .. autofunction:: delete
