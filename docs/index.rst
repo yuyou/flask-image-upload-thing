@@ -58,7 +58,7 @@ Installation
 
 ::
 
-    pip install -e git://github.com/FelixLoether/flask-uploads#egg=Flask-Uploads
+    pip install -e "git://github.com/FelixLoether/flask-uploads#egg=Flask-Uploads"
 
 
 API Reference
