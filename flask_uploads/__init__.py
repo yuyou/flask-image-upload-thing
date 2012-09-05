@@ -70,6 +70,9 @@ def delete(upload):
 
 
 def init(db, Storage, resizer=None):
+    if 'upload' in db.metadata.tables:
+        return  # Already initialized.
+
     global _db, _resizer, _Storage
     _db = db
     _resizer = resizer
