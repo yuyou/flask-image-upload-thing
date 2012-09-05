@@ -138,7 +138,7 @@ API Reference
     :type name: unicode
     :param data:
         The original upload data.
-    :type data: file-like object
+    :type data: file-like object or unicode
 
 .. function:: save_images(name, data, images)
 
@@ -149,7 +149,7 @@ API Reference
     :type name: unicode
     :param data:
         The original upload data.
-    :type data: file-like object
+    :type data: file-like object or unicode
     :param images:
         A dictionary containing the names and datas of the images, as returned
         by ``Resizer.resize_image``.
