@@ -36,6 +36,7 @@ db_mock = flexmock(
     Integer=('integer', [], {}),
     Unicode=lambda *a, **kw: ('unicode', a, kw),
     Model=MockModel,
+    metadata=flexmock(tables={}),
     session=flexmock(
         add=TestCase.added_objects.append,
         commit=lambda: TestCase.committed_objects.extend(
