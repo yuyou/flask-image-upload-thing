@@ -15,6 +15,9 @@ from .models import Upload
 
 
 def init(db, Storage, resizer=None):
+    if 'upload' in db.metadata.tables:
+        return  # Already registered the model.
+
     extensions.db = db
     extensions.resizer = resizer
     extensions.Storage = Storage
