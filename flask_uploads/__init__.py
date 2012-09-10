@@ -17,7 +17,7 @@ from .models import Upload
 def init(db, Storage, resizer=None):
     extensions.db = db
     extensions.resizer = resizer
-    extensions.storage = Storage()
+    extensions.Storage = Storage
     loader.ready()
 
 __all__ = (

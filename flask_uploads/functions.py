@@ -1,9 +1,20 @@
 import os
+from functools import wraps
 from StringIO import StringIO
 import extensions as ext
 from .models import Upload
 
 
+def require_storage(f):
+    @wraps(f)
+    def wrapper(*args, **kw):
+        if not ext.storage:
+            ext.storage = ext.Storage()
+        return f(*args, **kw)
+    return wrapper
+
+
+@require_storage
 def save_file(name, data):
     name = ext.storage.save(name, data)
     url = ext.storage.url(name)
@@ -11,6 +22,7 @@ def save_file(name, data):
     ext.db.session.commit()
 
 
+@require_storage
 def save_images(name, data, images):
     name = ext.storage.save(name, data).decode('utf-8')
     url = ext.storage.url(name).decode('utf-8')
@@ -51,6 +63,7 @@ def save(data, name=None):
         return save_file(name, data)
 
 
+@require_storage
 def delete(upload):
     ext.storage.delete(upload.name)
     if ext.resizer:
