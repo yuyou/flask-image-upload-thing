@@ -1,7 +1,7 @@
 from StringIO import StringIO
 from flexmock import flexmock
-import flask_uploads
-from flask_uploads import save, save_file, save_images
+import flask_uploads.functions as funcs
+from flask_uploads import save, save_file, save_images, init
 from . import TestCase
 
 save, save_file, save_images
@@ -108,23 +108,23 @@ class TestSave(StorageTestCase):
         self.save_file_args = self.save_images_args = None
         self._save_file = save_file
         self._save_images = save_images
-        flask_uploads.save_file = savefile
-        flask_uploads.save_images = saveimages
+        funcs.save_file = savefile
+        funcs.save_images = saveimages
 
     def teardown_method(self, method):
-        flask_uploads.save_file = save_file
-        flask_uploads.save_images = save_images
+        funcs.save_file = save_file
+        funcs.save_images = save_images
         StorageTestCase.teardown_method(self, method)
 
     def test_calls_save_file_without_resizer(self):
-        flask_uploads.init(self.db, self.Storage)
+        init(self.db, self.Storage)
         save(StringIO(u'bauercontent'), u'jackfile')
         assert self.save_file_args == (u'jackfile', u'bauercontent')
 
     def test_calls_save_file_when_resizing_raises_ioerror(self):
         def raise_ioerror(*args, **kwargs):
             raise IOError
-        flask_uploads.init(
+        init(
             self.db,
             self.Storage,
             flexmock(
@@ -137,7 +137,7 @@ class TestSave(StorageTestCase):
 
     def test_calls_save_images_when_resizing_works(self):
         images = object()
-        flask_uploads.init(
+        init(
             self.db,
             self.Storage,
             flexmock(

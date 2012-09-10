@@ -1,6 +1,5 @@
 from flexmock import flexmock
-import flask_uploads
-from flask_uploads import Upload
+from flask_uploads import Upload, extensions
 from . import TestCase
 
 
@@ -25,10 +24,10 @@ class TestWithoutResizer(TestCase):
             {'nullable': False}
         )
 
-    def test_globals_are_set_correctly(self):
-        assert flask_uploads._db is self.db
-        assert flask_uploads._Storage is self.Storage
-        assert flask_uploads._resizer is None
+    def test_extensions_are_set_correctly(self):
+        assert extensions.db is self.db
+        assert isinstance(extensions.storage, self.Storage)
+        assert extensions.resizer is None
 
 
 class TestWithResizer(TestWithoutResizer):
@@ -72,7 +71,7 @@ class TestWithResizer(TestWithoutResizer):
             {}
         )
 
-    def test_globals_are_set_correctly(self):
-        assert flask_uploads._db is self.db
-        assert flask_uploads._Storage is self.Storage
-        assert flask_uploads._resizer is self.resizer
+    def test_extensions_are_set_correctly(self):
+        assert extensions.db is self.db
+        assert isinstance(extensions.storage, self.Storage)
+        assert extensions.resizer is self.resizer
