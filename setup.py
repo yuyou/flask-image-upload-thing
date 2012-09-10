@@ -25,6 +25,7 @@ setup(
                 'functionality to your site.',
     long_description=open('README.rst').read(),
     packages=['flask_uploads'],
+    install_requires=['python-loaders==0.2.2'],
     platforms='any',
     cmdclass={'test': PyTest},
     classifiers=[
