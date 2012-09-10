@@ -17,7 +17,7 @@ class PyTest(Command):
 
 setup(
     name='Flask-Uploads',
-    version='0.1.1',
+    version='0.1.2',
     url='http://github.com/FelixLoether/flask-uploads',
     author='Oskari Hiltunen',
     author_email='flask-uploads@loethr.net',
