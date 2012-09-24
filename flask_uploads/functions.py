@@ -16,32 +16,33 @@ def require_storage(f):
 
 @require_storage
 def save_file(name, data):
-    name = ext.storage.save(name, data)
-    url = ext.storage.url(name)
+    f = ext.storage.save(name, data)
+    name = f.name.decode('utf-8')
+    url = f.url.decode('utf-8')
     ext.db.session.add(Upload(name=name, url=url))
     ext.db.session.commit()
 
 
 @require_storage
 def save_images(name, data, images):
-    name = ext.storage.save(name, data).decode('utf-8')
-    url = ext.storage.url(name).decode('utf-8')
+    f = ext.storage.save(name, data)
+    name = f.name.decode('utf-8')
+    url = f.url.decode('utf-8')
     upload = Upload(name=name, url=url)
 
     for size, image in images.iteritems():
         imageio = StringIO()
         image.save(imageio, format=image.ext)
-        n = ext.storage.save(
+        f = ext.storage.save(
             '%s_%s.%s' % (
                 os.path.splitext(name)[0],
                 size,
                 image.ext
             ),
             imageio
-        ).decode('utf-8')
-        url = ext.storage.url(n).decode('utf-8')
-        setattr(upload, u'%s_name' % size, n)
-        setattr(upload, u'%s_url' % size, url)
+        )
+        setattr(upload, u'%s_name' % size, f.name.decode('utf-8'))
+        setattr(upload, u'%s_url' % size, f.url.decode('utf-8'))
 
     ext.db.session.add(upload)
     ext.db.session.commit()
