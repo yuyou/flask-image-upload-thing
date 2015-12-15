@@ -16,11 +16,11 @@ class PyTest(Command):
         raise SystemExit(errno)
 
 setup(
-    name='Flask-Uploads',
+    name='Flask-Image-Upload-Thing',
     version='0.1.3',
-    url='http://github.com/FelixLoether/flask-uploads',
+    url='http://github.com/FelixLoether/flask-image-upload-thing',
     author='Oskari Hiltunen',
-    author_email='flask-uploads@loethr.net',
+    author_email='flask-image-upload-thing@loethr.net',
     description='A Flask extension to help you add file uploading '
                 'functionality to your site.',
     long_description=open('README.rst').read(),

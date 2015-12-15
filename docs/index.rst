@@ -1,13 +1,13 @@
-.. Flask-Uploads documentation master file, created by
+.. Flask-Image-Upload-Thing documentation master file, created by
    sphinx-quickstart on Mon Sep  3 13:33:23 2012.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Flask-Upload
-============
+Flask-Image-Upload-Thing
+========================
 
-Flask-Upload is a Flask extension to help you add file uploading functionality
-to your site. Here's a small example on utilizing Flask-Upload::
+Flask-Image-Upload-Thing is a Flask extension to help you add file uploading functionality
+to your site. Here's a small example on utilizing Flask-Image-Upload-Thing::
 
     import os.path
     from flask import Flask, redirect, request, render_template, url_for
@@ -58,7 +58,7 @@ Installation
 
 ::
 
-    pip install -e "git://github.com/FelixLoether/flask-uploads#egg=Flask-Uploads"
+    pip install -e "git://github.com/FelixLoether/flask-image-upload-thing=Flask-Image-Upload-Thing"
 
 
 API Reference
