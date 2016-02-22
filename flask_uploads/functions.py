@@ -15,17 +15,31 @@ def require_storage(f):
 
 
 @require_storage
-def save_file(name, data):
-    f = ext.storage.save(name, data)
+def save_file(name, data, folder_name=None):
+    storage = ext.storage
+    if folder_name is not None:
+        _old_folder = ext.storage.folder_name
+        if _old_folder != folder_name:
+            #TODO: hacky patch to create a new Storage
+            storage = ext.Storage(folder_name=folder_name)
+    f = storage.save(name, data)
     name = f.name.decode('utf-8')
     url = f.url.decode('utf-8')
-    ext.db.session.add(Upload(name=name, url=url))
+    up = Upload(name=name, url=url)
+    ext.db.session.add(up)
     ext.db.session.commit()
-
+    return up
 
 @require_storage
-def save_images(name, data, images):
-    f = ext.storage.save(name, data)
+def save_images(name, data, images, folder_name=None):
+    storage = ext.storage
+    if folder_name is not None:
+        _old_folder = ext.storage.folder_name
+        if _old_folder != folder_name:
+            #TODO: hacky patch to create a new Storage
+            storage = ext.Storage(folder_name=folder_name)
+
+    f = storage.save(name, data)
     name = f.name.decode('utf-8')
     url = f.url.decode('utf-8')
     upload = Upload(name=name, url=url)
@@ -33,7 +47,7 @@ def save_images(name, data, images):
     for size, image in images.iteritems():
         imageio = StringIO()
         image.save(imageio, format=image.ext)
-        f = ext.storage.save(
+        f = storage.save(
             '%s_%s.%s' % (
                 os.path.splitext(name)[0],
                 size,
@@ -46,9 +60,9 @@ def save_images(name, data, images):
 
     ext.db.session.add(upload)
     ext.db.session.commit()
+    return upload
 
-
-def save(data, name=None):
+def save(data, name=None, folder_name=None):
     if name is None:
         name = data.filename
     data = data.read()
@@ -58,10 +72,10 @@ def save(data, name=None):
             images = ext.resizer.resize_image(datafile)
         except IOError:
             # Not an image.
-            return save_file(name, data)
-        save_images(name, data, images)
+            return save_file(name, data, folder_name=folder_name)
+        return save_images(name, data, images, folder_name=folder_name)
     else:
-        return save_file(name, data)
+        return save_file(name, data, folder_name=folder_name)
 
 
 @require_storage
